@@ -69,7 +69,7 @@ function hook_okhttp3(classLoader) {
                         var responseBody = response.body();
                         var contentLength = responseBody.contentLength();
                         var bodySize = contentLength != -1 ? contentLength + "-byte" : "unknown-length";
-                        var message = response.message() ? response.message : ""
+                        var message = response.message() ? response.message() : ""
                         console.log("<-- " + response.code() + message + " " + response.request().url()
                             + "  (" + bodySize + " body)") 
 
@@ -91,7 +91,7 @@ function hook_okhttp3(classLoader) {
                             var bufferObj = source.buffer();
 
                             var gzippedLength = null;
-                            if ((myheaders.get("Content-Encoding")).toLowerCase() == "gzip") {
+                            if (myheaders.get("Content-Encoding") && (myheaders.get("Content-Encoding")).toLowerCase() == "gzip") {
                                 gzippedLength = bufferObj.size();
                                 var GzipSource = classLoader.use("okio.GzipSource");
                                 var gzippedResponseBody = null;
